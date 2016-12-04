@@ -1,0 +1,275 @@
+﻿@model Hive.Models.ViewModels.CreateMemberVM
+
+@{
+    ViewBag.Title = "Create Member";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Create Member</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+            </li>
+            <li>
+                <a>Member</a>
+            </li>
+            <li class="active">
+                <strong>Create</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    @using (Html.BeginForm("Create", "Member", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Create Member</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            @*<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li>
+                                        <a href="#">Config option 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Config option 2</a>
+                                    </li>
+                                </ul>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>*@
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="form-horizontal">
+                            @Html.ValidationSummary(true)
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.Member.Name, new { @class = "col-sm-2 control-label" })
+
+                                <div class="col-sm-10">
+                                    @Html.EditorFor(model => model.Member.Name)
+                                    @Html.ValidationMessageFor(model => model.Member.Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.Member.ArabicName, new { @class = "col-sm-2 control-label" })
+
+                                <div class="col-sm-10">
+                                    @Html.EditorFor(model => model.Member.ArabicName)
+                                    @Html.ValidationMessageFor(model => model.Member.ArabicName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.Member.Email, new { @class = "col-sm-2 control-label" })
+
+                                <div class="col-sm-10">
+                                    @Html.EditorFor(model => model.Member.Email)
+                                    @Html.ValidationMessageFor(model => model.Member.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.Member.Mobile, new { @class = "col-sm-2 control-label" })
+
+                                <div class="col-sm-10">
+                                    @Html.EditorFor(model => model.Member.Mobile)
+                                    @Html.ValidationMessageFor(model => model.Member.Mobile, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.Member.Phone, new { @class = "col-sm-2 control-label" })
+
+                                <div class="col-sm-10">
+                                    @Html.EditorFor(model => model.Member.Phone)
+                                    @Html.ValidationMessageFor(model => model.Member.Phone, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.Member.PersonalIdentityNumber, new { @class = "col-sm-2 control-label" })
+
+                                <div class="col-sm-10">
+                                    @Html.EditorFor(model => model.Member.PersonalIdentityNumber)
+                                    @Html.ValidationMessageFor(model => model.Member.PersonalIdentityNumber, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.Member.Address, new { @class = "col-sm-2 control-label" })
+
+                                <div class="col-sm-10">
+                                    @Html.EditorFor(model => model.Member.Address)
+                                    @Html.ValidationMessageFor(model => model.Member.Address, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.Member.Type, new { @class = "col-sm-2 control-label" })
+
+                                <div class="col-sm-10">
+                                    @Html.EnumDropDownListFor(model => model.Member.Type, "", new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.Member.Status, new { @class = "col-sm-2 control-label" })
+
+                                <div class="col-sm-10">
+                                    @Html.EnumDropDownListFor(model => model.Member.Status, "", new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group" id="data">
+                                @Html.LabelFor(model => model.Member.BirthDate, new { @class = "control-label col-md-2" })
+                                <div class="col-sm-10">
+                                    <div class="input-group date">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        <input class="text-box single-line" data-val="true" data-val-date="The field Hire Date must be a date." id="Member_BirthDate"
+                                               name="Member.BirthDate" value="" type="text">
+                                        @Html.ValidationMessageFor(model => model.Member.BirthDate, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Member.PicturePath, new { @class = "col-sm-2 control-label" })
+                                <div class="col-sm-10">
+                                    <input type="file" name="file" />
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.Member.Notes, new { @class = "col-sm-2 control-label" })
+
+                                <div class="col-sm-10">
+                                    @Html.TextAreaFor(model => model.Member.Notes)
+                                    @Html.ValidationMessageFor(model => model.Member.Notes, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.UserAccount.UserName, new { @class = "col-sm-2 control-label" })
+
+                                <div class="col-sm-10">
+                                    @Html.EditorFor(model => model.UserAccount.UserName)
+                                    @Html.ValidationMessageFor(model => model.UserAccount.UserName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.UserAccount.Password, new { @class = "col-sm-2 control-label" })
+
+                                <div class="col-sm-10">
+                                    @Html.EditorFor(model => model.UserAccount.Password)
+                                    @Html.ValidationMessageFor(model => model.UserAccount.Password, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.UserAccount.ConfirmPassword, new { @class = "col-sm-2 control-label" })
+
+                                <div class="col-sm-10">
+                                    @Html.EditorFor(model => model.UserAccount.ConfirmPassword)
+                                    @Html.ValidationMessageFor(model => model.UserAccount.ConfirmPassword, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" class="btn btn-primary" value="Create" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+@section Styles {
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/plugins/laddaStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/ladda")
+    @Scripts.Render("~/plugins/dataPicker")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+
+            var l = $( '.ladda-button-demo' ).ladda();
+            l.click(function()
+            {
+                // Start loading
+                l.ladda( 'start' );
+                // Do something in backend and then stop ladda
+                // setTimeout() is only for demo purpose
+                //setTimeout(function(){
+                //    l.ladda('stop');
+                //},2000)
+            });
+
+            $('#data .input-group.date').datepicker({
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: true,
+                autoclose: true
+            });
+
+        });
+    </script>
+}
+
+
