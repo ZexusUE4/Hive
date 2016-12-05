@@ -11,6 +11,10 @@ namespace Hive.DAL
 {
     public class HiveContext : IdentityDbContext<HiveUser>
     {
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Task> Tasks { get; set; }
+        public DbSet<Team> Teams { get; set; }
+
         public HiveContext() : base("HiveContext")
         {
 
@@ -22,6 +26,8 @@ namespace Hive.DAL
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            modelBuilder.Entity<Team>().HasMany(t => t.Members).WithMany(u => u.Teams);
         }
     }
 

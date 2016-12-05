@@ -8,6 +8,9 @@ using System.Linq;
 using System.Web;
 using Hive.DAL;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Claims;
+using System.Security.Principal;
 
 namespace Hive.Models
 {
@@ -19,6 +22,12 @@ namespace Hive.Models
 
     public class HiveUser : IdentityUser
     {
+
+        public HiveUser()
+        {
+            Teams = new HashSet<Team>();
+            Projects = new HashSet<Project>();
+        }
         public DateTime JoinedDate { get; set; }
 
         [Required]
@@ -34,6 +43,26 @@ namespace Hive.Models
 
         public Genders? Gender { get; set; }
         public string Bio { get; set; }
+
+        public virtual ICollection<Team> Teams { get; set; }
+        public virtual ICollection<Project> Projects { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                return FirstName + " " + LastName;
+            }
+        }
+
+        public string GetImagePath()
+        {
+            if (ProfilePicturePath != null && ProfilePicturePath.Length > 0)
+                return ProfilePicturePath;
+            else
+                return "/App_Data/ProfilePics/man.png";
+        }
+
     }
 
 
@@ -63,5 +92,33 @@ namespace Hive.Models
 
             return manager;
         }
+    }
+}
+
+
+namespace Hive.Models
+{
+    public static class IdentityExtensions
+    {
+
+        public static HiveUser GetHiveUser(this IIdentity identity)
+        {
+            var userID = ((ClaimsIdentity)identity).GetUserId();
+
+            HiveContext db = new HiveContext();
+
+            HiveUser user = db.Users.Find(userID);
+
+            if (user != null)
+            {
+                return user;
+            }
+
+            return new HiveUser()
+            {
+                FirstName = "Unknown",
+            };
+        }
+
     }
 }

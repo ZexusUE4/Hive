@@ -1,218 +1,181 @@
-﻿@model Hive.Models.ViewModels.RegisterVM
+﻿@model RegisterVM
 
 @{
     ViewBag.Title = "Register";
+    Layout = null;
 }
 
-<div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-10">
-        <h2>Create Member</h2>
-        <ol class="breadcrumb">
-            <li>
-                <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
-            </li>
-            <li>
-                <a>User</a>
-            </li>
-            <li class="active">
-                <strong0>Register</strong0>
-            </li>
-        </ol>
-    </div>
-    <div class="col-lg-2">
+<!DOCTYPE html>
+<html>
+<head>
 
-    </div>
-</div>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>INSPINIA | Login</title>
 
-<div class="wrapper wrapper-content animated fadeInRight">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
 
-    @using (Html.BeginForm("Register", "Account", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken()
+    <link href="~/Content/animate.css" rel="stylesheet">
+    <link href="~/Content/style.css" rel="stylesheet">
 
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>Create User</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            @*<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-wrench"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user">
-                                    <li>
-                                        <a href="#">Config option 1</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Config option 2</a>
-                                    </li>
-                                </ul>
-                                <a class="close-link">
-                                    <i class="fa fa-times"></i>
-                                </a>*@
-                        </div>
-                    </div>
-                    <div class="ibox-content">
-                        <div class="form-horizontal">
-                            @Html.ValidationSummary(true)
-                            <div class="form-group">
+</head>
 
-                                @Html.LabelFor(model => model.User.FirstName, new { @class = "col-sm-2 control-label" })
+<body class="gray-bg">
 
-                                <div class="col-sm-10">
-                                    @Html.EditorFor(model => model.User.FirstName)
-                                    @Html.ValidationMessageFor(model => model.User.FirstName, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
+    <div class="middle-box text-center  animated fadeInDown">
+        <div>
+            <div>
 
-                            <div class="form-group">
+                <h1 class="logo-name">ELM+</h1>
 
-                                @Html.LabelFor(model => model.User.LastName, new { @class = "col-sm-2 control-label" })
-
-                                <div class="col-sm-10">
-                                    @Html.EditorFor(model => model.User.LastName)
-                                    @Html.ValidationMessageFor(model => model.User.LastName, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-
-                                @Html.LabelFor(model => model.Username, new { @class = "col-sm-2 control-label" })
-
-                                <div class="col-sm-10">
-                                    @Html.EditorFor(model => model.Username)
-                                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-
-                                @Html.LabelFor(model => model.Email, new { @class = "col-sm-2 control-label" })
-
-                                <div class="col-sm-10">
-                                    @Html.EditorFor(model => model.Email)
-                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Password, new { @class = "col-sm-2 control-label" })
-
-                                <div class="col-sm-10">
-                                    @Html.EditorFor(model => model.Password)
-                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.ConfirmPassword, new { @class = "col-sm-2 control-label" })
-
-                                <div class="col-sm-10">
-                                    @Html.EditorFor(model => model.ConfirmPassword)
-                                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-
-                            <div class="hr-line-dashed"></div>
-
-                            <div class="form-group">
-
-                                @Html.LabelFor(model => model.Phone, new { @class = "col-sm-2 control-label" })
-
-                                <div class="col-sm-10">
-                                    @Html.EditorFor(model => model.User.Phone)
-                                    @Html.ValidationMessageFor(model => model.User.Phone, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-
-                                @Html.LabelFor(model => model.User.Gender, new { @class = "col-sm-2 control-label" })
-
-                                <div class="col-sm-10">
-                                    @Html.EnumDropDownListFor(model => model.User.Gender, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.User.Gender, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-
-                                @Html.LabelFor(model => model.User.Bio, new { @class = "col-sm-2 control-label" })
-
-                                <div class="col-sm-10">
-                                    @Html.TextAreaFor(model => model.User.Bio, new { @class = "form-control", @width = 120 })
-                                    @Html.ValidationMessageFor(model => model.User.Bio, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.User.ProfilePicturePath, new { @class = "col-sm-2 control-label" })
-                                <div class="col-sm-10">
-                                    <input type="file" name="file" />
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <input type="submit" class="btn btn-primary" value="Create" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
+            <h3>Welcome to IN+</h3>
+            <p>
+                Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.
+            </p>
+            <p>Login in. To see it in action.</p>
+            <div class="ibox-content">
+
+                @using (Html.BeginForm("Login", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "m-t", role = "form" }))
+                {
+
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+
+                        @Html.LabelFor(model => model.User.FirstName)
+
+                        @Html.TextBoxFor(m => m.User.FirstName, new { @class = "form-control", placeholder = "First Name" })
+                        @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.PasswordFor(m => m.User.LastName, new { @class = "form-control", placeholder = "Last Name" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+
+                    <button type="submit" class="btn btn-primary block full-width m-b">Sign Up</button>
+
+                }
+
+                @*@using (Html.BeginForm("Register", "Account", null, FormMethod.Post, new { @class="m-t", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true)
+                                <div class="form-group">
+
+                                    @Html.LabelFor(model => model.User.FirstName, new { @class = "col-sm-2 control-label" })
+
+                                    <div class="col-sm-10">
+                                        @Html.EditorFor(model => model.User.FirstName)
+                                        @Html.ValidationMessageFor(model => model.User.FirstName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    @Html.LabelFor(model => model.User.LastName, new { @class = "col-sm-2 control-label" })
+
+                                    <div class="col-sm-10">
+                                        @Html.EditorFor(model => model.User.LastName)
+                                        @Html.ValidationMessageFor(model => model.User.LastName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+
+                                    @Html.LabelFor(model => model.Username, new { @class = "col-sm-2 control-label" })
+
+                                    <div class="col-sm-10">
+                                        @Html.EditorFor(model => model.Username)
+                                        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    @Html.LabelFor(model => model.Email, new { @class = "col-sm-2 control-label" })
+
+                                    <div class="col-sm-10">
+                                        @Html.EditorFor(model => model.Email)
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Password, new { @class = "col-sm-2 control-label" })
+
+                                    <div class="col-sm-10">
+                                        @Html.EditorFor(model => model.Password)
+                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ConfirmPassword, new { @class = "col-sm-2 control-label" })
+
+                                    <div class="col-sm-10">
+                                        @Html.EditorFor(model => model.ConfirmPassword)
+                                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    @Html.LabelFor(model => model.Phone, new { @class = "col-sm-2 control-label" })
+
+                                    <div class="col-sm-10">
+                                        @Html.EditorFor(model => model.Phone)
+                                        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    @Html.LabelFor(model => model.User.Gender, new { @class = "col-sm-2 control-label" })
+
+                                    <div class="col-sm-10">
+                                        @Html.EnumDropDownListFor(model => model.User.Gender, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.User.Gender, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    @Html.LabelFor(model => model.User.Bio, new { @class = "col-sm-2 control-label" })
+
+                                    <div class="col-sm-10">
+                                        @Html.TextAreaFor(model => model.User.Bio, new { @class = "form-control", @width = 120 })
+                                        @Html.ValidationMessageFor(model => model.User.Bio, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.User.ProfilePicturePath, new { @class = "col-sm-2 control-label" })
+                                    <div class="col-sm-10">
+                                        <input type="file" name="file" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" class="btn btn-primary" value="Create" />
+                                    </div>
+                                </div>
+                }*@
+            </div>
+
+            <p class="m-t"> <small>Inspinia we app framework base on Bootstrap 3 &copy; 2015</small> </p>
         </div>
-    }
-</div>
+    </div>
 
+</body>
 
-@section Styles {
-    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
-    @Styles.Render("~/plugins/laddaStyles")
-    @Styles.Render("~/plugins/dataPickerStyles")
-}
+</html>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/plugins/iCheck")
-    @Scripts.Render("~/plugins/ladda")
-    @Scripts.Render("~/plugins/dataPicker")
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
-            });
-
-            var l = $( '.ladda-button-demo' ).ladda();
-            l.click(function()
-            {
-                // Start loading
-                l.ladda( 'start' );
-                // Do something in backend and then stop ladda
-                // setTimeout() is only for demo purpose
-                //setTimeout(function(){
-                //    l.ladda('stop');
-                //},2000)
-            });
-
-            $('#data .input-group.date').datepicker({
-                todayBtn: "linked",
-                keyboardNavigation: false,
-                forceParse: false,
-                calendarWeeks: true,
-                autoclose: true
-            });
-
-        });
-    </script>
-}
 
 

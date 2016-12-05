@@ -1,0 +1,84 @@
+﻿@model Project
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>@Model.Title Details</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Index", "Project")">Home</a>
+            </li>
+            <li class="active">
+                <strong0>Details</strong0>
+            </li>
+        </ol>
+    </div>
+    <div class="col-sm-2">
+        <div class="title-action">
+            <a href="@Url.Action("Edit", new { id = Model.ID })" class="btn btn-default"><i class="fa fa-wrench"></i> Edit </a>
+            <a href="@Url.Action("Delete", new { id = Model.ID })" class="btn btn-danger"><i class="fa fa-close"></i> Delete </a>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row m-b-lg m-t-lg">
+        <div class="col-lg-12">
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <div>
+                        <h2 class="no-margins">
+                            @Model.Title
+                        </h2>
+                        <br />
+                        <dl class="dl-horizontal">
+                            <dt>
+                                Description
+                            </dt>
+                            <dd>
+                                @Model.Description
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Manager)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Manager.FullName)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Status)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Status)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.DateCreated)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.DateCreated)
+                            </dd>
+
+                    </dl>
+
+                </div>
+
+                    @*@Html.ActionLinkAuthorized("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-primary" })
+                        @Html.ActionLinkAuthorized("Back to List", "Index", new { id = Model.Project.ID }, new { @class = "btn btn-white" })*@
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

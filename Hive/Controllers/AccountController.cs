@@ -72,7 +72,7 @@ namespace Hive.Controllers
                     if (returnUrl != null)
                         return Redirect(returnUrl);
                     else
-                        return RedirectToAction("Dasboard_4", "Dashboards");
+                        return RedirectToAction("Index", "Project");
                 }
                 else
                 {
@@ -106,6 +106,16 @@ namespace Hive.Controllers
                 model.User.PhoneNumber = model.Phone;
                 model.User.Email = model.Email;
 
+                Team defaultTeam = new Team()
+                {
+                    Name = model.User.UserName,
+                    DateCreated = DateTime.Now,
+                    TeamLeader = model.User,
+                };
+
+                model.User.Teams.Add(defaultTeam);
+                
+
                 IdentityResult result = await UserManager.CreateAsync(model.User, model.Password);
                 if (result.Succeeded)
                 {
@@ -114,11 +124,15 @@ namespace Hive.Controllers
                     if(file != null && (file.FileName.Contains(".jpg") || file.FileName.Contains(".png")))
                     {
                         string uri = "/App_Data/ProfilePics/" + model.User.Id + ".jpg";
-                        Directory.CreateDirectory("/App_Data/ProfilePics/");
-                        file.SaveAs(uri);
-                        model.User.ProfilePicturePath = uri;
+                        Directory.CreateDirectory(Server.MapPath("/App_Data/ProfilePics/"));
+                        file.SaveAs(Server.MapPath(uri));
+
+                        HiveUser user = db.Users.Find(model.User.Id);
+                        user.ProfilePicturePath = uri;
                         db.SaveChanges();
                     }
+
+
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -454,14 +468,10 @@ namespace Hive.Controllers
         //    return View(model);
         //}
 
-        //
-        // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login");
         }
 
         //
