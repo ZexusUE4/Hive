@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace CSP1260.Controllers
+namespace Hive.Controllers
 {
     public class ImageController : Controller
     {
@@ -14,7 +14,7 @@ namespace CSP1260.Controllers
             if (System.IO.File.Exists(fileName))
                 return File(System.IO.File.ReadAllBytes(fileName), "image/jpg");
             else
-                return File(System.IO.File.ReadAllBytes(Server.MapPath("~/AppData/ProfilePics/man.png")), "image/png");
+                return File(System.IO.File.ReadAllBytes(Server.MapPath("~/App_Data/ProfilePics/man.png")), "image/png");
         }
     }
 }

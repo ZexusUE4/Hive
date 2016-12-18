@@ -1,5 +1,5 @@
 ﻿<div class="row border-bottom">
-    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <nav class="navbar navbar-static-top hive-bg" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
             <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
             @*<form role="search" class="navbar-form-custom" method="post" action="">
@@ -10,9 +10,9 @@
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li>
-                <span class="m-r-sm text-muted welcome-message" data-i18n="topnav.welcometext">Welcome @User.Identity.GetHiveUser().FirstName</span>
+                <span class="m-r-sm welcome-message" style="font-size: 15px; font-weight:800;"data-i18n="topnav.welcometext">Welcome @User.Identity.GetHiveUser().FirstName</span>
             </li>
-            <li class="dropdown">
+            @*<li class="dropdown">
                 <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
                     <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
                 </a>
@@ -106,17 +106,17 @@
                         </div>
                     </li>
                 </ul>
-            </li>
+            </li>*@
             <li>
-                <a href="@Url.Action("LogOff", "Account")">
+                <a style="font-weight:900;" href="@Url.Action("LogOff", "Account")">
                     <i class="fa fa-sign-out"></i> Log out
                 </a>
             </li>
-            <li>
+            @*<li>
                 <a class="right-sidebar-toggle">
                     <i class="fa fa-tasks"></i>
                 </a>
-            </li>
+            </li>*@
         </ul>
     </nav>
 </div>

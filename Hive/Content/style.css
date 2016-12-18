@@ -587,14 +587,15 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
   color: #fff; }
 
 .btn-primary {
-  background-color: #1ab394;
-  border-color: #1ab394;
-  color: #FFFFFF; }
+  /*background-color: #1ab394;*/
+  background-color: #f8ac59;
+  border-color: #000000;
+  color: #000000; }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary, .btn-primary:active:focus, .btn-primary:active:hover, .btn-primary.active:hover, .btn-primary.active:focus {
-  background-color: #18a689;
-  border-color: #18a689;
-  color: #FFFFFF; }
+  background-color: #ffbb00;
+  border-color: #000000;
+  color: #000000; }
 
 .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
   background-image: none; }
@@ -3492,7 +3493,7 @@ table.table-mail tr td {
   background-color: #1c84c6;
   color: #ffffff; }
 
-.lazur-bg {
+.lazur-bg{
   background-color: #23c6c8;
   color: #ffffff; }
 
@@ -7068,10 +7069,10 @@ body.boxed-layout.skin-3 #wrapper {
   background: #fff; }
 
 .skin-3 .nav > li > a {
-  color: #948b96; }
+  color: #DDDDDD; }
 
 .skin-3 .nav > li.active > a {
-  color: #fff; }
+  color: #ffffff; }
 
 .skin-3 .navbar-minimalize {
   background: #ecba52;
@@ -7516,3 +7517,9 @@ body.md-skin {
     display: none; }
   #page-wrapper {
     margin: 0; } }
+
+.hive-bg 
+{
+    background-image: url("/Images/back4.png");
+    background-color: #ffeab0;
+}

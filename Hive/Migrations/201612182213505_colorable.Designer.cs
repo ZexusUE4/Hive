@@ -7,13 +7,13 @@ namespace Hive.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class hiveUser : IMigrationMetadata
+    public sealed partial class colorable : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(hiveUser));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(colorable));
         
         string IMigrationMetadata.Id
         {
-            get { return "201612041330334_hiveUser"; }
+            get { return "201612182213505_colorable"; }
         }
         
         string IMigrationMetadata.Source

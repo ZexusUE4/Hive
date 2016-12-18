@@ -11,7 +11,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>INSPINIA | Login</title>
+    <title>Hive | Login</title>
 
     <link href="~/Content/bootstrap.min.css" rel="stylesheet">
     <link href="~/Fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -21,21 +21,20 @@
 
 </head>
 
-<body class="gray-bg">
+<body class="gray-bg" style="background-color: #ffefca">
 
     <div class="middle-box text-center loginscreen  animated fadeInDown">
         <div>
             <div>
-
-                <h1 class="logo-name">ELM+</h1>
-
+                <h1 class="logo-name">Hive</h1>
             </div>
-            <h3>Welcome to IN+</h3>
+            <h3>Welcome to HIVE</h3>
             <p>
-                Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.
+                Hive is an online project management application that enables users to manage and track projects, deadlines, schedules, and other workflow processes
             </p>
-            <p>Login in. To see it in action.</p>
+            <p>Sign Up. To see it in action.</p>
             <div class="ibox-content">
+
                 @using (Html.BeginForm("Login", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "m-t", role = "form" }))
                 {
 
@@ -59,7 +58,7 @@
 
                     <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
 
-                    <a href="#"><small>Forgot password?</small></a>
+                    @*<a href="#"><small>Forgot password?</small></a>*@
                     <p class="text-muted text-center"><small>Do not have an account?</small></p>
                     <a class="btn btn-sm btn-white btn-block" href="@Url.Action("Register", "Account")">Create an account</a>
                 }

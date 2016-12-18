@@ -3,93 +3,78 @@ using Hive.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace Hive.Controllers
 {
-    [Authorize]
-    public class ProjectController : Controller
+    public class TeamController : Controller
     {
         private HiveContext db = new HiveContext();
-        
-        public ProjectController()
-        {
 
-        }
-
-        public ProjectController(HiveContext db)
-        {
-            this.db = db;
-        }
-
+        // GET: Team
         public ActionResult Index()
         {
 
             HiveUser user = db.Users.Find(User.Identity.GetUserId());
 
-            return View(user.Projects);
+            return View(user.Teams);
         }
 
         public ActionResult Create()
         {
-            Project project = new Project();
+            Team team = new Team();
 
-            project.ManagerID = User.Identity.GetUserId();
-            project.DateCreated = DateTime.Now;
-            project.Status = ProjectStatuses.Active;
+       // team.TeamLeader.Id= User.Identity.GetUserId();
+            team.DateCreated = DateTime.Now;
 
-            return View(project);
+            return View(team);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Project model)
+        public ActionResult Create(Team model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                db.Projects.Add(model);
+                db.Teams.Add(model);
                 db.SaveChanges();
-
                 return RedirectToAction("Details", new { id = model.ID });
             }
 
             return View(model);
         }
-
         public ActionResult Details(int id)
         {
-            Project project = db.Projects.Find(id);
+            Team team = db.Teams.Find(id);
 
-            if(project == null)
+            if (team == null)
             {
                 return HttpNotFound();
             }
 
-            return View(project);
+            return View(team);
         }
-
         public ActionResult Edit(int id)
         {
-            Project project = db.Projects.Find(id);
+            Team team = db.Teams.Find(id);
 
-            if (project == null)
+            if (team == null)
             {
                 return HttpNotFound();
             }
 
-            return View(project);
+            return View(team);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Project model)
+        public ActionResult Edit(Team model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                Project inDb = db.Projects.Find(model.ID);
+                Team inDb = db.Teams.Find(model.ID);
 
                 db.Entry(inDb).CurrentValues.SetValues(model);
                 db.SaveChanges();
@@ -103,25 +88,25 @@ namespace Hive.Controllers
 
         public ActionResult Delete(int id)
         {
-            Project project = db.Projects.Find(id);
+            Team team = db.Teams.Find(id);
 
-            if (project == null)
+            if (team == null)
             {
                 return HttpNotFound();
             }
 
-            return View(project);
+            return View(team);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Project project = db.Projects.Find(id);
-            db.Projects.Remove(project);
+            //missing : delete team only by TeamLeader
+            Team team = db.Teams.Find(id);
+            db.Teams.Remove(team);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
     }
-
 }

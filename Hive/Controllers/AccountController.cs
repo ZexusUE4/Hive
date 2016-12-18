@@ -14,6 +14,7 @@ using Hive.Models;
 using Hive.Models.ViewModels;
 using System.IO;
 using Hive.DAL;
+using Hive.Helpers;
 
 namespace Hive.Controllers
 {
@@ -21,6 +22,7 @@ namespace Hive.Controllers
     public class AccountController : Controller
     {
         private HiveContext db = new HiveContext();
+        private bool inUnitTest = false;
 
         private AccountManager userManager;
 
@@ -29,9 +31,10 @@ namespace Hive.Controllers
 
         }
 
-        public AccountController(AccountManager userManager)
+        public AccountController(AccountManager userManager, bool inUnitTest)
         {
             UserManager = userManager;
+            this.inUnitTest = true;
         }
 
         public AccountManager UserManager
@@ -106,14 +109,12 @@ namespace Hive.Controllers
                 model.User.PhoneNumber = model.Phone;
                 model.User.Email = model.Email;
 
-                Team defaultTeam = new Team()
+                model.User.DefaultTeam = new Team()
                 {
                     Name = model.User.UserName,
                     DateCreated = DateTime.Now,
-                    TeamLeader = model.User,
+                    IsDefaultTeam = true,
                 };
-
-                model.User.Teams.Add(defaultTeam);
                 
 
                 IdentityResult result = await UserManager.CreateAsync(model.User, model.Password);
@@ -132,15 +133,15 @@ namespace Hive.Controllers
                         db.SaveChanges();
                     }
 
-
-
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Dashboard_4", "Dashboards");
+                    EmailNotifier.SendWelcomeMessage(model.User.Id);
+
+                    return RedirectToAction("Index", "Project");
                 }
                 else
                 {
@@ -152,6 +153,13 @@ namespace Hive.Controllers
             return View(model);
         }
 
+        public ActionResult Details(string id)
+        {
+            string userID = id ?? User.Identity.GetUserId();
+            HiveUser user = db.Users.Find(userID);
+
+            return View(user);
+        }
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
@@ -514,6 +522,9 @@ namespace Hive.Controllers
 
         private void SignIn(HiveUser user, bool isPersistent)
         {
+            if (inUnitTest)
+                return;
+
             var ident = UserManager.CreateIdentity(user,
                        DefaultAuthenticationTypes.ApplicationCookie);
             AuthenticationManager.SignIn(

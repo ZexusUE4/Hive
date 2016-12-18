@@ -12,7 +12,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>INSPINIA | Login</title>
+    <title>HIVE | Register </title>
 
     <link href="~/Content/bootstrap.min.css" rel="stylesheet">
     <link href="~/Fonts/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -22,154 +22,87 @@
 
 </head>
 
-<body class="gray-bg">
+<body class="gray-bg" style="background-color: #ffefca">
 
-    <div class="middle-box text-center  animated fadeInDown">
+    <div class="middle-box text-center loginscreen   animated fadeInDown">
         <div>
             <div>
-
-                <h1 class="logo-name">ELM+</h1>
-
+                <h1 class="logo-name">Hive</h1>
             </div>
-            <h3>Welcome to IN+</h3>
+            <h3>Welcome to HIVE</h3>
             <p>
-                Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.
+                Hive is an online project management application that enables users to manage and track projects, deadlines, schedules, and other workflow processes
             </p>
-            <p>Login in. To see it in action.</p>
+            <p>Sign Up. To see it in action.</p>
             <div class="ibox-content">
 
-                @using (Html.BeginForm("Login", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "m-t", role = "form" }))
+                @using (Html.BeginForm("Register", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @class = "m-t", role = "form",  }))
                 {
 
                     @Html.AntiForgeryToken()
 
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
                     <div class="form-group">
-
-                        @Html.LabelFor(model => model.User.FirstName)
-
+                        @*@Html.LabelFor(model => model.User.FirstName, new { @class = "col-lg-4 control-label" })*@
                         @Html.TextBoxFor(m => m.User.FirstName, new { @class = "form-control", placeholder = "First Name" })
-                        @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
-                    </div>
+                        @Html.ValidationMessageFor(m => m.User.FirstName, "", new { @class = "text-danger" })
 
+                    </div>
                     <div class="form-group">
-                        @Html.PasswordFor(m => m.User.LastName, new { @class = "form-control", placeholder = "Last Name" })
+                        @*@Html.LabelFor(model => model.User.LastName, new { @class = "col-lg-4 control-label" })*@
+                        @Html.TextBoxFor(m => m.User.LastName, new { @class = "form-control", placeholder = "Last Name" })
+                        @Html.ValidationMessageFor(m => m.User.LastName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @*@Html.LabelFor(model => model.Username, new { @class = "col-lg-4 control-label" })*@
+                        @Html.TextBoxFor(model => model.Username, new { @class = "form-control", placeholder = "Username" })
+                        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @*@Html.LabelFor(model => model.Email, new { @class = "col-lg-4 control-label" })*@
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @*@Html.LabelFor(model => model.Password, new { @class = "col-lg-4 control-label" })*@
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                     </div>
+                    <div class="form-group">
+                        @*@Html.LabelFor(model => model.ConfirmPassword, new { @class = "col-lg-4 control-label" })*@
+                        @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @*@Html.LabelFor(model => model.Phone, new { @class = "col-sm-3 control-label" })*@
+                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", placeholder = "Phone" })
+                        @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @*@Html.LabelFor(model => model.User.Gender, new { @class = "col-sm-3 control-label" })*@
+                        @Html.EnumDropDownListFor(m => m.User.Gender, new { @class = "form-control", placeholder = "Gender" })
+                        @Html.ValidationMessageFor(m => m.User.Gender, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @*@Html.LabelFor(model => model.User.Bio, new { @class = "col-sm-3" })*@
+                        @Html.TextAreaFor(m => m.User.Bio, new { @class = "form-control", placeholder = "Bio" })
+                        @Html.ValidationMessageFor(m => m.User.Bio, "", new { @class = "text-danger" })
+                    </div>
 
-                    <button type="submit" class="btn btn-primary block full-width m-b">Sign Up</button>
 
+                    <div class="form-group">
+                        <label title="Upload image file" for="inputImage" class="btn btn-warning">
+                            <input type="file" accept="image/*" name="file" id="inputImage">
+                            Upload Profile Picture
+                        </label>
+                    </div>
+
+                    <br />
+                    <button type="submit" class="btn btn-primary block full-width m-b">Register</button>
                 }
-
-                @*@using (Html.BeginForm("Register", "Account", null, FormMethod.Post, new { @class="m-t", enctype = "multipart/form-data" }))
-                {
-                    @Html.AntiForgeryToken()
-                                @Html.ValidationSummary(true)
-                                <div class="form-group">
-
-                                    @Html.LabelFor(model => model.User.FirstName, new { @class = "col-sm-2 control-label" })
-
-                                    <div class="col-sm-10">
-                                        @Html.EditorFor(model => model.User.FirstName)
-                                        @Html.ValidationMessageFor(model => model.User.FirstName, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-
-                                    @Html.LabelFor(model => model.User.LastName, new { @class = "col-sm-2 control-label" })
-
-                                    <div class="col-sm-10">
-                                        @Html.EditorFor(model => model.User.LastName)
-                                        @Html.ValidationMessageFor(model => model.User.LastName, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-
-                                    @Html.LabelFor(model => model.Username, new { @class = "col-sm-2 control-label" })
-
-                                    <div class="col-sm-10">
-                                        @Html.EditorFor(model => model.Username)
-                                        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-
-                                    @Html.LabelFor(model => model.Email, new { @class = "col-sm-2 control-label" })
-
-                                    <div class="col-sm-10">
-                                        @Html.EditorFor(model => model.Email)
-                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.Password, new { @class = "col-sm-2 control-label" })
-
-                                    <div class="col-sm-10">
-                                        @Html.EditorFor(model => model.Password)
-                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.ConfirmPassword, new { @class = "col-sm-2 control-label" })
-
-                                    <div class="col-sm-10">
-                                        @Html.EditorFor(model => model.ConfirmPassword)
-                                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-
-                                    @Html.LabelFor(model => model.Phone, new { @class = "col-sm-2 control-label" })
-
-                                    <div class="col-sm-10">
-                                        @Html.EditorFor(model => model.Phone)
-                                        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-
-                                    @Html.LabelFor(model => model.User.Gender, new { @class = "col-sm-2 control-label" })
-
-                                    <div class="col-sm-10">
-                                        @Html.EnumDropDownListFor(model => model.User.Gender, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.User.Gender, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-
-                                    @Html.LabelFor(model => model.User.Bio, new { @class = "col-sm-2 control-label" })
-
-                                    <div class="col-sm-10">
-                                        @Html.TextAreaFor(model => model.User.Bio, new { @class = "form-control", @width = 120 })
-                                        @Html.ValidationMessageFor(model => model.User.Bio, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.User.ProfilePicturePath, new { @class = "col-sm-2 control-label" })
-                                    <div class="col-sm-10">
-                                        <input type="file" name="file" />
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-10">
-                                        <input type="submit" class="btn btn-primary" value="Create" />
-                                    </div>
-                                </div>
-                }*@
             </div>
 
-            <p class="m-t"> <small>Inspinia we app framework base on Bootstrap 3 &copy; 2015</small> </p>
+            <p class="m-t"> <small>Hive &copy; 2016</small> </p>
         </div>
     </div>
 
@@ -179,3 +112,27 @@
 
 
 
+@section Styles {
+    @Styles.Render("~/plugins/dataPickerStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/dataPicker")
+
+    <script type="text/javascript">
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': { allow_single_deselect: true },
+            '.chosen-select-no-single': { disable_search_threshold: 10 },
+            '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+            '.chosen-select-width': { width: "95%" }
+        }
+
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+    </script>
+}

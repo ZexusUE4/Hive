@@ -1,0 +1,82 @@
+﻿@model Team
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Delete @Model.Name</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Index", "Teaam")">Home</a>
+            </li>
+            <li class="active">
+                <strong0>Delete</strong0>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row m-b-lg m-t-lg">
+        <div class="col-lg-12">
+
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+
+                    <h4 class="text-danger">Are you sure you want to delete this?</h4>
+
+                    <div>
+                        <h2 class="no-margins">
+                            @Model.Name
+                        </h2>
+                        <br />
+                        <dl class="dl-horizontal">
+                            <dt>
+                                Description
+                            </dt>
+                            <dd>
+                                @Model.Description
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.TeamLeader)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.TeamLeader.FullName)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.DateCreated)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.DateCreated)
+                            </dd>
+
+                        </dl>
+
+                    </div>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-actions no-color">
+                            <input type="submit" value="Delete" class="btn btn-primary" />
+                            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-white" })
+                        </div>
+                    }
+
+                    @*@Html.ActionLinkAuthorized("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-primary" })
+                        @Html.ActionLinkAuthorized("Back to List", "Index", new { id = Model.Project.ID }, new { @class = "btn btn-white" })*@
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

@@ -14,23 +14,23 @@ namespace Hive.Models
         Completed,
     }
 
-    public class Project
+    public class Project : Colorable
     {
 
-        private static List<string> Colors = new List<string>()
-        {
-            "coral",
-            "darkblue",
-            "darkmagenta",
-            "red"
-        };
+        //private static List<string> Colors = new List<string>()
+        //{
+        //    "coral",
+        //    "darkblue",
+        //    "darkmagenta",
+        //    "red"
+        //};
 
-        private static Random rand = new Random();
+        //private static Random rand = new Random();
 
-        public static string GetRandomColor()
-        {
-            return Colors[rand.Next(Colors.Count)];
-        }
+        //public static string GetRandomColor()
+        //{
+        //    return Colors[rand.Next(Colors.Count)];
+        //}
 
         public int ID { get; set; }
         public string ManagerID { get; set; }
@@ -40,7 +40,6 @@ namespace Hive.Models
         public string Description { get; set; }
         public DateTime DateCreated { get; set; }
         public ProjectStatuses Status { get; set; }
-        public string Color { get; set; }
 
         public virtual HiveUser Manager { get; set; }
         public virtual ICollection<Team> Teams { get; set; }

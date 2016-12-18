@@ -25,9 +25,12 @@ namespace Hive.Models
 
         public HiveUser()
         {
-            Teams = new HashSet<Team>();
+            TeamMembers = new HashSet<TeamMember>();
             Projects = new HashSet<Project>();
         }
+
+        public int DefaultTeamID { get; set; }
+
         public DateTime JoinedDate { get; set; }
 
         [Required]
@@ -44,7 +47,8 @@ namespace Hive.Models
         public Genders? Gender { get; set; }
         public string Bio { get; set; }
 
-        public virtual ICollection<Team> Teams { get; set; }
+        public virtual Team DefaultTeam { get; set; }
+        public virtual ICollection<TeamMember> TeamMembers { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
 
         public string FullName
@@ -63,6 +67,13 @@ namespace Hive.Models
                 return "/App_Data/ProfilePics/man.png";
         }
 
+        public IEnumerable<Team> Teams
+        {
+            get
+            {
+                return TeamMembers.Select(tm => tm.Team);
+            }
+        }
     }
 
 

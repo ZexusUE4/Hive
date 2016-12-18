@@ -26,8 +26,6 @@ namespace Hive.DAL
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-
-            modelBuilder.Entity<Team>().HasMany(t => t.Members).WithMany(u => u.Teams);
         }
     }
 

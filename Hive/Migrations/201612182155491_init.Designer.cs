@@ -13,7 +13,7 @@ namespace Hive.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201606162133209_init"; }
+            get { return "201612182155491_init"; }
         }
         
         string IMigrationMetadata.Source
