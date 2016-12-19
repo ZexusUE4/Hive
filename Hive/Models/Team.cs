@@ -1,4 +1,6 @@
-﻿using Hive.Models;
+﻿using Hive.DAL;
+using Hive.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -21,6 +23,8 @@ namespace Hive.Models
 
         [Required]
         public string Name { get; set; }
+        public string Code { get; set; }
+
         public DateTime DateCreated { get; set; }
         public string Description { get; set; }
         public bool IsDefaultTeam { get; set; }
@@ -59,6 +63,35 @@ namespace Hive.Models
             {
                 return TeamMembers.Select(tm => tm.Member);
             }
+        }
+
+        public bool IsLeaderLoggedIn()
+        {
+            return TeamLeader.Id == HttpContext.Current.User.Identity.GetUserId();
+        }
+
+        public bool IsMemberLoggedIn()
+        {
+            return TeamMembers.Count(tm => tm.MemberID == HttpContext.Current.User.Identity.GetUserId()) > 0;
+        }
+
+        public bool IsMemberExists(string userId)
+        {
+            return TeamMembers.Count(tm => tm.MemberID == userId) > 0;
+        }
+
+        public static string GetUniqueCode(HiveContext db)
+        {
+            Random rand = new Random();
+            Team t = null;
+            string retCode;
+            do
+            {
+                retCode = "T" + rand.Next(100, 999).ToString();
+                t = db.Teams.FirstOrDefault(el => el.Code == retCode);
+            } while (t != null);
+
+            return retCode;
         }
 
     }

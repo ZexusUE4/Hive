@@ -202,6 +202,18 @@
     <Compile Include="Migrations\201612182236234_allColors.Designer.cs">
       <DependentUpon>201612182236234_allColors.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612191213170_memberIDString.cs" />
+    <Compile Include="Migrations\201612191213170_memberIDString.Designer.cs">
+      <DependentUpon>201612191213170_memberIDString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612191252551_teamCode.cs" />
+    <Compile Include="Migrations\201612191252551_teamCode.Designer.cs">
+      <DependentUpon>201612191252551_teamCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612191329032_memberDateJoined.cs" />
+    <Compile Include="Migrations\201612191329032_memberDateJoined.Designer.cs">
+      <DependentUpon>201612191329032_memberDateJoined.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Colorable.cs" />
     <Compile Include="Models\HiveUser.cs" />
@@ -1842,6 +1854,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612182236234_allColors.resx">
       <DependentUpon>201612182236234_allColors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612191213170_memberIDString.resx">
+      <DependentUpon>201612191213170_memberIDString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612191252551_teamCode.resx">
+      <DependentUpon>201612191252551_teamCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612191329032_memberDateJoined.resx">
+      <DependentUpon>201612191329032_memberDateJoined.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

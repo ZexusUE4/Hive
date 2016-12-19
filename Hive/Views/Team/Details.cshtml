@@ -8,7 +8,7 @@
         <h2>@Model.Name Details</h2>
         <ol class="breadcrumb">
             <li>
-                <a href="@Url.Action("Index", "Team")">Home</a>
+                <a href="@Url.Action("Index", "Team")">Team</a>
             </li>
             <li class="active">
                 <strong0>Details</strong0>
@@ -18,8 +18,12 @@
     <div class="col-sm-2">
 
         <div class="title-action">
-            <a href="@Url.Action("Edit", new { id = Model.ID })" class="btn btn-default"><i class="fa fa-wrench"></i> Edit </a>
-            <a href="@Url.Action("Delete", new { id = Model.ID })" class="btn btn-danger"><i class="fa fa-close"></i> Delete </a>
+            @if (Model.IsLeaderLoggedIn())
+            {
+                <a href="@Url.Action("Edit", new { id = Model.ID })" class="btn btn-default"><i class="fa fa-wrench"></i> Edit </a>
+                <a href="@Url.Action("Delete", new { id = Model.ID })" class="btn btn-danger"><i class="fa fa-close"></i> Delete </a>
+            }
+
         </div>
     </div>
 </div>
@@ -37,21 +41,30 @@
                         </h2>
                         <br />
                         <dl class="dl-horizontal">
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Code)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Code)
+                            </dd>
+
                             <dt>
                                 Description
                             </dt>
                             <dd>
                                 @Model.Description
                             </dd>
-@*
-    <dt>
-      @Html.DisplayNameFor(model => model.TeamLeader.FullName)
-    </dt>
+                            
+                            <dt>
+                                @Html.DisplayNameFor(model => model.TeamLeader)
+                            </dt>
 
-    <dd>
-        @Html.DisplayFor(model => model.TeamLeader.FullName)
-    </dd>
-*@
+                            <dd>
+                                @Html.DisplayFor(model => model.TeamLeader.FullName)
+                            </dd>
+                            
                             <dt>
                                 @Html.DisplayNameFor(model => model.DateCreated)
                             </dt>
@@ -61,8 +74,7 @@
                             </dd>
 
                     </dl>
-                        <a href="@Url.Action("AddMembers", new { id = Model.ID })" class="btn btn-default"><i class="fa fa-plus"></i>Add Members </a>
-
+                       
                 </div>
 
                     @*@Html.ActionLinkAuthorized("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-primary" })
@@ -73,5 +85,133 @@
         </div>
 
     </div>
+        <div class="ibox-content ">
+            <div class="ibox">
+                <div class="search-form">
+                    @using (Html.BeginForm("InviteMember", "Team", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.Hidden("teamID", Model.ID)
+                    <label class="control-label">Add Members</label>
+                    <div class="input-group">
+                        <input type="text" placeholder="Email" name="email" id="search" class="form-control input-lg">
+                        <div class="input-group-btn">
+                            <button id="invite" class="btn btn-lg btn-primary" type="submit">
+                                Invite
+                            </button>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+    <div class="ibox-content m-b-sm">
+        <div class="ibox">
+                <table class="footable table table-hover" data-page-size="20" data-filter=#filter data-striping="false">
+                    <thead>
+                        <tr>
+
+                            <th>Full Name</th>
+                            <th>Username</th>
+                            <th>Date Joined</th>
+                            <th>Leader</th>
+                            <th>Status</th>
+                            <th class="text-right">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var index = 1;
+                        }
+                        @foreach (var teamMember in Model.TeamMembers)
+                        {
+                            <tr class="member" data-ID="@teamMember.ID" data-rowCounter="@index">
+                                <td>
+                                    @Html.DisplayFor(model => teamMember.Member.FullName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => teamMember.Member.UserName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => teamMember.DateJoined)
+                                </td>
+                                <td>
+                                    @if(teamMember.IsLeader)
+                                    {
+                                        <i class='fa fa-flag'></i>
+                                    }
+                                </td>
+                                <td>
+                                    @if (teamMember.Status == TeamMemberStatuses.Accepted)
+                                    {
+                                        <span class="label label-primary">@teamMember.Status</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="label label-default">@teamMember.Status</span>
+                                    }
+                                </td>
+                                @if(Model.IsLeaderLoggedIn())
+                                {
+                                    <td class="text-right">
+                                        <button class="btn-white btn btn-xs remove" data-ID="@teamMember.ID"> Remove </button>
+                                    </td>
+                                }
+                                else if (User.Identity.GetUserId() == teamMember.MemberID)
+                                {
+                                    <td class="text-right">
+                                        <button class="btn-white btn btn-xs remove" data-ID="@teamMember.ID"> Leave </button>
+                                    </td>
+                                }
+                            </tr>
+                            index++;
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="8">
+                                <ul class="pagination pull-right"></ul>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+        </div>
+    </div>
 
 </div>
+
+@section Styles {
+    @Styles.Render("~/plugins/awesomeCheckboxStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/Content/plugins/chosen/chosenStyles")
+    @Styles.Render("~/plugins/dataPickerStyles")
+    @Styles.Render("~/plugins/footableStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/dataPicker")
+    @Scripts.Render("~/plugins/chosen")
+    @Scripts.Render("~/plugins/footable")
+    @Scripts.Render("~/plugins/formsplugins")
+
+<script type="text/javascript">
+
+$(document).ready(function () {
+
+        var rowCounter = 1;
+
+        $('.footable').footable();
+        var footable = $('.footable').data('footable');
+        
+        $('.remove').click(function () {
+
+            var memberID = $(this).attr('data-ID');
+
+            var url = "@Url.Action("RemoveMember")" + "?memberID=" + memberID;
+
+            window.location = url;
+        });
+    });
+</script>
+}
+

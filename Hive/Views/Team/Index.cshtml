@@ -9,8 +9,11 @@
     <div class="col-lg-9">
         <h2>Teams</h2>
         <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Index", "Team")">Team</a>
+            </li>
             <li class="active">
-                <a href="@Url.Action("Index", "Team")">Home</a>
+                <strong0>Index</strong0>
             </li>
         </ol>
     </div>
@@ -30,14 +33,19 @@
                     </h2>
                     <ul class="list-unstyled m-t-md">
                         <li>
+                            <span class="fa fa-code m-r-xs"></span>
+                            <label>Code:</label>
+                            @team.Code
+                        </li>
+                        <li>
                             <span class="fa fa-bookmark m-r-xs"></span>
                             <label>Description:</label>
                             @team.Description
                         </li>
                         <li>
                             <span class="fa fa-tasks m-r-xs"></span>
-                            <label>Teamleader:</label>
-                   @*         @team.TeamLeader.FullName *@
+                            <label>Team Leader:</label>
+                            @team.TeamLeader.FullName
                         </li>
                     </ul>
                 </div>

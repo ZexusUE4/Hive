@@ -71,7 +71,7 @@ namespace Hive.Models
         {
             get
             {
-                return TeamMembers.Select(tm => tm.Team);
+                return TeamMembers.Where(tm => tm.Status == TeamMemberStatuses.Accepted).Select(tm => tm.Team);
             }
         }
     }

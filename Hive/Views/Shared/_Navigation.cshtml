@@ -25,11 +25,19 @@
             </li>
 
             <li class="@Html.IsSelected(controller: "Project", action: "Index")">
-                <a href="@Url.Action("Index", "Project")"><i class="fa fa-diamond"></i> <span class="nav-label" data-i18n="nav.layouts">Home</span></a>
+                <a href="@Url.Action("Index", "Project")"><i class="fa fa-diamond"></i> <span class="nav-label" data-i18n="nav.layouts">Projects</span></a>
             </li>
 
             <li class="@Html.IsSelected(controller: "Project", action: "Create")">
                 <a href="@Url.Action("Create", "Project")"><i class="fa fa-asterisk"></i> <span class="nav-label" data-i18n="nav.layouts">New Project</span></a>
+            </li>
+
+            <li class="@Html.IsSelected(controller: "Team", action: "Index")">
+                <a href="@Url.Action("Index", "Team")"><i class="fa fa-group"></i> <span class="nav-label" data-i18n="nav.layouts">Teams</span></a>
+            </li>
+
+            <li class="@Html.IsSelected(controller: "Team", action: "Create")">
+                <a href="@Url.Action("Create", "Team")"><i class="fa fa-plus"></i> <span class="nav-label" data-i18n="nav.layouts">New Team</span></a>
             </li>
 
             @*<li class="@Html.IsSelected(controller: "Dashboards")">

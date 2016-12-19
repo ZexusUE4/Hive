@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,21 +18,6 @@ namespace Hive.Models
     public class Project : Colorable
     {
 
-        //private static List<string> Colors = new List<string>()
-        //{
-        //    "coral",
-        //    "darkblue",
-        //    "darkmagenta",
-        //    "red"
-        //};
-
-        //private static Random rand = new Random();
-
-        //public static string GetRandomColor()
-        //{
-        //    return Colors[rand.Next(Colors.Count)];
-        //}
-
         public int ID { get; set; }
         public string ManagerID { get; set; }
 
@@ -44,5 +30,10 @@ namespace Hive.Models
         public virtual HiveUser Manager { get; set; }
         public virtual ICollection<Team> Teams { get; set; }
         public virtual ICollection <Task> Tasks { get; set; }
+
+        public bool IsLoggedManager()
+        {
+            return ManagerID == HttpContext.Current.User.Identity.GetUserId();
+        }
     }
 }
