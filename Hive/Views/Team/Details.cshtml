@@ -83,8 +83,10 @@
                 </div>
             </div>
         </div>
-
     </div>
+
+    @if(Model.IsLeaderLoggedIn())
+    {
         <div class="ibox-content ">
             <div class="ibox">
                 <div class="search-form">
@@ -104,6 +106,7 @@
                 </div>
             </div>
         </div>
+    }
 
     <div class="ibox-content m-b-sm">
         <div class="ibox">

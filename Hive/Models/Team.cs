@@ -80,6 +80,14 @@ namespace Hive.Models
             return TeamMembers.Count(tm => tm.MemberID == userId) > 0;
         }
 
+        public IEnumerable<Task> CompletedTasks
+        {
+            get
+            {
+                return Tasks.Where(t => t.Status == TaskStatuses.Completed);
+            }
+        }
+
         public static string GetUniqueCode(HiveContext db)
         {
             Random rand = new Random();

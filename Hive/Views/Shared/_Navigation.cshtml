@@ -11,8 +11,8 @@
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="block m-t-xs">
                                 <strong class="font-bold">@User.Identity.GetHiveUser().FullName</strong>
-                            @*</span> <span class="text-muted text-xs block">Art Director <b class="caret"></b></span>*@
-                            </span>
+                            </span> 
+                        <span class="text-muted text-xs block">@User.Identity.GetHiveUser().UserName</span>
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
                         <li><a href="@Url.Action("Details", "Account")">Profile</a></li>

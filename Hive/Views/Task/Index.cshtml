@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Project>
+
+@{
+    ViewBag.Title = "Projects";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+        <h2>Projects</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Index", "Project")">Project</a>
+            </li>
+            <li class="active">
+                <strong0>Index</strong0>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    @if(Model.Count() > 0)
+    {
+        foreach (var project in Model)
+        {
+            <div class="col-lg-4">
+
+                <div class="widget p-xl lazur-bg" style="background-color:@project.Color;cursor:pointer;" onclick="toDetails(@project.ID)">
+                    <h2 class="font-bold">
+                        @project.Title
+                    </h2>
+                    <ul class="list-unstyled m-t-md">
+                        <li>
+                            <span class="fa fa-bookmark m-r-xs"></span>
+                            <label>Description:</label>
+                            @project.Description
+                        </li>
+                        <li>
+                            <span class="fa fa-tasks m-r-xs"></span>
+                            <label>Tasks:</label>
+                            @project.Tasks.Count()
+                        </li>
+                        <li>
+                            <span class="fa fa-star m-r-xs"></span>
+                            <label>Status:</label>
+                            @project.Status
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="widget yellow-bg p-lg text-center" style="cursor:pointer" onclick="toCreate()">
+            <div class="m-b-md">
+                <i class="fa fa-asterisk fa-4x"></i>
+                <h3 class="font-bold no-margins">
+                    No Projects to display
+                </h3>
+                <small>Click here to create.</small>
+            </div>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+
+    function toDetails(id)
+    {
+        window.location = "@Url.Action("Details")" + "/" + id;
+    }
+
+    function toCreate()
+    {
+        window.location = "@Url.Action("Create")";
+    }
+</script>

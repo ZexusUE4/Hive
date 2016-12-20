@@ -172,6 +172,7 @@ namespace Inspinia_MVC5
 
             // dataPicker 
             bundles.Add(new ScriptBundle("~/plugins/dataPicker").Include(
+                      "~/Scripts/moment.js",
                       "~/Scripts/plugins/datapicker/bootstrap-datepicker.js"));
 
             // nouiSlider styles

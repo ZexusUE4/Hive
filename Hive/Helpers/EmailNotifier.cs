@@ -1,6 +1,7 @@
 ﻿using Hive.DAL;
 using Hive.Models;
 using System;
+using System.Linq;
 using System.Net.Mail;
 
 namespace Hive.Helpers
@@ -49,6 +50,28 @@ namespace Hive.Helpers
             message.To.Add(new MailAddress(email));
 
             SendEmail(message);
+        }
+
+        public static void SendTaskAssignedToTeam(int taskID, int teamID)
+        {
+            Team team = db.Teams.Find(teamID);
+            Task task = db.Tasks.Find(taskID);
+
+            string url = serverHostName + "/Task/Details/" + task.ID.ToString();
+
+            team.AcceptedMembers.ToList().ForEach(t =>
+            {
+                MailMessage message = new MailMessage()
+                {
+                    Subject = "Hive | New Task Assigned ",
+                    Body = t.FirstName + "\nYou were assigned a new Task:\n" + task.Title + "\nClick here to view the task:\t" + url,
+                    From = new MailAddress("come.reply.to.me@gmail.com"),
+                };
+
+                message.To.Add(new MailAddress(t.Email));
+
+                SendEmail(message);
+            });
         }
 
         private static bool SendEmail(MailMessage message)

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Hive.Models
 {
@@ -35,5 +36,30 @@ namespace Hive.Models
         {
             return ManagerID == HttpContext.Current.User.Identity.GetUserId();
         }
+
+        public IEnumerable<Task> ActiveTasks
+        {
+            get
+            {
+                return Tasks.Where(t => t.Status == TaskStatuses.Active);
+            }
+        }
+
+        public IEnumerable<Task> CompletedTasks
+        {
+            get
+            {
+                return Tasks.Where(t => t.Status == TaskStatuses.Completed);
+            }
+        }
+
+        public IEnumerable<Task> ExpiredTasks
+        {
+            get
+            {
+                return Tasks.Where(t => t.Status == TaskStatuses.Expired);
+            }
+        }
+
     }
 }

@@ -71,9 +71,9 @@
                                 @Html.DisplayFor(model => model.DateCreated)
                             </dd>
 
-                    </dl>
+                        </dl>
 
-                </div>
+                    </div>
 
                     @*@Html.ActionLinkAuthorized("Edit", "Edit", new { id = Model.ID }, new { @class = "btn btn-primary" })
                         @Html.ActionLinkAuthorized("Back to List", "Index", new { id = Model.Project.ID }, new { @class = "btn btn-white" })*@
@@ -82,6 +82,216 @@
             </div>
         </div>
 
+        <div class="col-lg-12">
+            <div class="ibox">
+                <div class="ibox-content">
+                    @*<div class="pull-right">
+                            @Html.ActionLinkAuthorized("Create New Enrollment", "Create", "Enrollment", new { memberID = Model.ID }, new { @class = "btn btn-primary btn-xs" })
+                        </div>*@
+                    <h2> Collaborators </h2>
+
+                    @if(Model.IsLoggedManager())
+                    {
+                        <div class="ibox-content ">
+                            <div class="ibox">
+                                <div class="search-form">
+                                    @using (Html.BeginForm("AddTeam", "Project", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    {
+                                        @Html.Hidden("projectID", Model.ID)
+                                        <label class="control-label">Add Collaborators</label>
+                                        <div class="input-group">
+                                            <input type="text" placeholder="Username or Team Code" name="teamCode" id="search" class="form-control input-lg">
+                                            <div class="input-group-btn">
+                                                <button id="invite" class="btn btn-lg btn-primary" type="submit">
+                                                    Add
+                                                </button>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <table class="footable table table-hover" data-page-size="10" data-filter=#filter data-striping="false">
+                        <thead>
+                            <tr>
+
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>Team Leader</th>
+                                <th>No. of Members</th>
+                                <th>Completed Tasks</th>
+                                <th class="text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var team in Model.Teams)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(model => team.Code)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => team.Name)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink(team.TeamLeader.FullName, "Details", "Account", new { id = team.TeamLeader.Id })
+                                    </td>
+                                    <td>
+                                        @team.AcceptedMembers.Count()
+                                    </td>
+                                    <td>
+                                        @team.CompletedTasks.Count()
+                                    </td>
+                                    <td class="text-right">
+                                        <div class="btn-group">
+                                            @Html.ActionLink("View", "Details", "Team", new { id = team.ID }, new { @class = "btn-white btn btn-xs" })
+
+                                            @if (Model.IsLoggedManager())
+                                            {
+                                                @Html.ActionLink("Delete", "RemoveTeam", "Project", new { projectID = Model.ID, teamID = team.ID }, new { @class = "btn-white btn btn-xs" })
+                                            }
+                                            else if (team.IsLeaderLoggedIn())
+                                            {
+                                                @Html.ActionLink("Delete", "RemoveTeam", "Project", new { projectID = Model.ID, teamID = team.ID }, new { @class = "btn-white btn btn-xs" })
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="8">
+                                    <ul class="pagination pull-right"></ul>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+                <div class="col-lg-4">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <h3>Active</h3>
+
+                            @if(Model.IsLoggedManager())
+                            {
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <a id="newTask" href="@Url.Action("Create","Task",new { projectID = Model.ID })" class="btn btn-sm btn-white pull-right"> <i class="fa fa-plus"></i> Add task</a>
+                                    </span>
+                                </div>
+                            }
+
+                            <ul class="sortable-list connectList agile-list" id="active">
+                                @foreach (var task in Model.ActiveTasks)
+                                {
+                                    <li class="warning-element" id="@task.ID">
+                                        @if (Model.IsLoggedManager())
+                                        {
+                                            <div class="ibox-tools">
+                                                <a href="@Url.Action("Edit","Task",new { id = task.ID })"><i class="fa fa-pencil"></i></a>
+                                                <a href="@Url.Action("Delete","Task",new { id = task.ID })"><i class="fa fa-times"></i></a>
+                                            </div>
+                                        }
+                                        @task.Title
+                                        <div class="agile-detail">
+                                            <a href="@Url.Action("ChangeStatus", "Task", new { id = task.ID, status = TaskStatuses.Completed })" class="pull-right btn btn-xs btn-primary">Done</a>
+                                            <a href="@Url.Action("Details","Task", new { id = task.ID })" class="pull-right btn btn-xs btn-white">View</a>
+                                            <i class="fa fa-clock-o"></i> @task.Deadline
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <h3>Completed</h3>
+
+                            <ul class="sortable-list connectList agile-list" id="completed">
+                                @foreach (var task in Model.CompletedTasks)
+                                {
+                                    <li class="success-element" id="@task.ID">
+
+                                        @if(Model.IsLoggedManager())
+                                        {
+                                            <div class="ibox-tools">
+                                                <a href="@Url.Action("Edit","Task",new { id = task.ID })"><i class="fa fa-pencil"></i></a>
+                                                <a href="@Url.Action("Delete","Task",new { id = task.ID })"><i class="fa fa-times"></i></a>
+                                            </div>
+                                        }
+                                        @task.Title
+                                        <div class="agile-detail">
+                                            <a href="@Url.Action("ChangeStatus", "Task", new { id = task.ID, status = TaskStatuses.Active})" class="pull-right btn btn-xs btn-primary">To Active</a>
+                                            <a href="@Url.Action("Details","Task", new { id = task.ID })" class="pull-right btn btn-xs btn-white">View</a>
+                                            <i class="fa fa-clock-o"></i> @task.Deadline
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <h3>Expired</h3>
+
+                            <ul class="sortable-list connectList agile-list" id="expired">
+                                @foreach (var task in Model.ExpiredTasks)
+                                {
+                                    <li class="danger-element" id="@task.ID">
+                                        @if (Model.IsLoggedManager())
+                                        {
+                                            <div class="ibox-tools">
+                                                <a href="@Url.Action("Edit","Task",new { id = task.ID })"><i class="fa fa-pencil"></i></a>
+                                                <a href="@Url.Action("Delete","Task",new { id = task.ID })"><i class="fa fa-times"></i></a>
+                                            </div>
+                                        }
+                                        @task.Title
+                                        <div class="agile-detail">
+                                            @if (Model.IsLoggedManager())
+                                            {
+                                                <a href="@Url.Action("ChangeStatus", "Task", new { id = task.ID, status = TaskStatuses.Active})" class="pull-right btn btn-xs btn-primary">To Active</a>
+                                                <a href="@Url.Action("Details","Task", new { id = task.ID })" class="pull-right btn btn-xs btn-white">View</a>
+                                            }
+                                            <i class="fa fa-clock-o"></i> @task.Deadline
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
     </div>
 
 </div>
+
+@section Styles {
+    @Styles.Render("~/plugins/footableStyles")
+    }
+
+@section Scripts {
+    @Scripts.Render("~/plugins/sparkLine")
+    @Scripts.Render("~/plugins/footable")
+    @Scripts.Render("~/bundles/jqueryui")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.footable').footable();
+
+        });
+    </script>
+    }

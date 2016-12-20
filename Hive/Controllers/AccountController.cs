@@ -114,6 +114,7 @@ namespace Hive.Controllers
                     Name = model.User.UserName,
                     DateCreated = DateTime.Now,
                     IsDefaultTeam = true,
+                    Code = model.Username,
                 };
                 
 

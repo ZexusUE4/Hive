@@ -19,6 +19,7 @@
     <!-- Primary Inspinia style -->     
     @Styles.Render("~/Content/css")
     @Styles.Render("~/font-awesome/css")
+    @Styles.Render("~/plugins/toastrStyles")
     
 </head>
 <body class="">
@@ -59,11 +60,43 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/plugins/slimScroll")
     @Scripts.Render("~/bundles/inspinia")
+    @Scripts.Render("~/plugins/toastr")
 
     <!-- Skin config script - only for demo purpose-->
     @Scripts.Render("~/bundles/skinConfig")
 
     <!-- Handler for local scripts -->
     @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "progressBar": true,
+                    "positionClass": "toast-bottom-right",
+                    "onclick": null,
+                    "showDuration": "400",
+                    "hideDuration": "1000",
+                    "timeOut": "7000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                };
+
+                $(document).ready(function () {
+
+                @if(TempData["Notifications"] != null)
+                {
+                foreach(Notification notify in (List<Notification>)TempData["Notifications"])
+                {
+                    @Html.Raw(notify.ToToastrString())
+                }
+                }
+                });
+    </script>
 </body>
+
+
 </html>
